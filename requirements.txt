@@ -1,0 +1,8 @@
+django==2.1
+django-channels
+djangorestframework
+channels_redis
+numpy
+pandas
+redis
+nexmo
