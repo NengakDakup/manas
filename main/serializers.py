@@ -5,5 +5,5 @@ from main.models import Record
 class RecordSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Record
-        fields = ['rain_fall',]
+        fields = ['rainfall_intensity',]
 

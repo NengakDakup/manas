@@ -19,25 +19,31 @@ def get_prediction():
     """
     Get hourly prediction and update graphs
     """
-    current_state = States.get_state(Record.objects.last().rain_fall)
+    if Record.objects.count() <= 0:
+        print("No data yet, prediction cannot happen")
+        return
+    current_state = States.get_state(Record.objects.last().rainfall_intensity)
     # Generate a Numpy Array of Records
-    rain_fall_entries = np.array(Record.objects.values_list('rain_fall', flat=True))
+    rainfall_intensity_entries = np.array(Record.objects.values_list('rainfall_intensity', flat=True))
 
-    data = pd.DataFrame({'Rainfall': rain_fall_entries})
+    data = pd.DataFrame({'Rainfall': rainfall_intensity_entries})
     transition_matrix = TransitionMatrix(data)
 
     predictor = MarkovChainPredictor(transition_matrix.values, transition_matrix.states)
-    # For every predictions for every 3 seconds till 6hrs
-    predictions = predictor.generate_states(current_state, no_predictions=7200)
+    # For every predictions for every 10 hrs
+    predictions = predictor.generate_states(current_state, no_predictions=10)
     # All predictions for a markov model should use the same uid
     uid = uuid.uuid4()
     send_sms = True
     for i, prediction in enumerate(predictions):
-        pred = Prediction.objects.create(
-            uid=uid,
-            prediction=prediction[0].upper(),
-            date_predicted=timezone.now() + timezone.timedelta(hours=i)
+        pred, created = Prediction.objects.get_or_create(
+            date_predicted=timezone.now() + timezone.timedelta(hours=i),
+            defaults={
+                "uid":uid, 
+                "prediction": prediction[0].upper()
+            }
         )
+
         if pred.is_drought():
             # Send SMS once after a set of prediction
             # Don't bump the user with excess SMSs

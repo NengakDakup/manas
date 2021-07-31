@@ -17,8 +17,8 @@ def send_websocket_message(sender, **kwargs):
             'data_results',
             {
                 'type': 'chat_message',
-                'rain_fall': instance.rain_fall,
-                'rain_state': States.get_state(instance.rain_fall)
+                'rainfall_intensity': instance.rainfall_intensity,
+                'rain_state': States.get_state(instance.rainfall_intensity)
             }
         )
         get_prediction.delay()

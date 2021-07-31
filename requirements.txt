@@ -1,8 +1,9 @@
-django==2.1
-django-channels
-djangorestframework
-channels_redis
-numpy
-pandas
-redis
-nexmo
+django==2.1.5
+channels==2.3.1
+djangorestframework==3.11.0
+django-celery-results==1.1.2
+channels_redis=3.3.0
+numpy==1.17.4
+pandas==0.25.2
+redis==3.5.3
+nexmo==v2.4.0

@@ -13,7 +13,7 @@ class States:
     
     INDICES = {DROUGHT: 0, ALMOST_DROUGHT: 1, NORMAL: 2}
     NAMES = dict((v,k) for k,v in INDICES.items())
-    SHORT_NAMES = {'N': DROUGHT, 'A': ALMOST_DROUGHT, 'F': NORMAL}
+    SHORT_NAMES = {'D': DROUGHT, 'A': ALMOST_DROUGHT, 'N': NORMAL}
     TRANSITIONS = {DROUGHT: {}, ALMOST_DROUGHT: {}, NORMAL: {}}
     
     drought_criteria = lambda data: data.le(0.25)

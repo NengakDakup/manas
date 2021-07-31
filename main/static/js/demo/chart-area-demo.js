@@ -2,10 +2,10 @@
 Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
 Chart.defaults.global.defaultFontColor = '#858796';
 
-states = {normal: 1, almost_flooded: 2, flooded: 3};
-rev_states = {1: 'normal', 2: 'almost_flooded', 3: 'flooded'};
-predictedData = predictedFloodState.map(x => states[x]);
-measuredFloodData = measuredFloodState.map(x => states[x]);
+states = {drought: 1, almost_drought: 2, normal: 3};
+rev_states = {1: 'drought', 2: 'almost_drought', 3: 'normal'};
+predictedData = predictedDroughtState.map(x => states[x]);
+measuredDroughtData = measuredDroughtState.map(x => states[x]);
 
 function addData(chart, data) {
 //    chart.data.labels.push(label);
@@ -48,7 +48,7 @@ var myLineChart = new Chart(ctx, {
   data: {
     labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
     datasets: [{
-      label: "Water Level",
+      label: "Rainfall Intensity",
       lineTension: 0.3,
       borderColor: "rgba(78, 115, 223, 1)",
       fill: false,
@@ -135,14 +135,14 @@ var myLineChart = new Chart(ctx, {
   }
 });
 
-// flood Sate Area Chart 
+// flood Sate Area Chart
 var ctx = document.getElementById("myAreaChart2");
 var myLineChart2 = new Chart(ctx, {
   type: 'line',
   data: {
     labels: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
     datasets: [{
-      label: "Current Flood Level",
+      label: "Current State",
       lineTension: 0.3,
       borderColor: "rgba(78, 115, 223, 1)",
       fill: false,
@@ -154,9 +154,9 @@ var myLineChart2 = new Chart(ctx, {
       pointHoverBorderColor: "rgba(78, 115, 223, 1)",
       pointHitRadius: 10,
       pointBorderWidth: 2,
-      data: measuredFloodData,
+      data: measuredDroughtData,
     },{
-      label: "Predicted Flood State",
+      label: "Predicted State",
       lineTension: 0.3,
       borderColor: "rgba(223, 15, 13, 1)",
       fill: false,
