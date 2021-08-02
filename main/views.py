@@ -4,6 +4,7 @@ from django.db.models import Avg
 from django.utils import timezone
 from django.shortcuts import render
 from django.views.generic import TemplateView
+from django.http import HttpResponseBadRequest, HttpResponse
 from rest_framework import viewsets
 
 from main.models import Record, Prediction, Notification
@@ -54,3 +55,12 @@ class RecordViewSet(viewsets.ModelViewSet):
     queryset = Record.objects.all() 
     serializer_class = RecordSerializer 
     
+
+def record_insert(request):
+    record = request.GET.get("rnf")
+    print(record)
+    if record:
+        Record.objects.create(rainfall_intensity=int(record))
+        return HttpResponse("Created", status=200)
+    return HttpResponseBadRequest("Bad Params")
+
